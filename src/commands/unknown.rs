@@ -1,11 +1,9 @@
-use serde_json::Value;
 use crate::server::{
-    response::ApiResponse,
-    response::ErrorType,
-    response::ApiError,
+    request::Parameter, response::ApiError, response::ApiResponse, response::ErrorType,
 };
+use serde_json::Value;
 
-pub fn handle(_parameters: Option<Vec<Value>>) -> ApiResponse {
+pub fn handle(_parameters: Option<Vec<Parameter>>) -> ApiResponse {
     ApiResponse {
         data: None,
         status: 400,
@@ -13,7 +11,7 @@ pub fn handle(_parameters: Option<Vec<Value>>) -> ApiResponse {
         message: "Unknown command".to_string(),
         error: Some(ApiError {
             r#type: Some(ErrorType::NotFound),
-            message: "The command provided is not recognized.".to_string()
+            message: "The command provided is not recognized.".to_string(),
         }),
     }
 }

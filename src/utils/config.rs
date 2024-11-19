@@ -1,8 +1,8 @@
+use config::{Config, File, FileFormat};
+use once_cell::sync::Lazy;
+use serde::Deserialize;
 use std::env;
 use std::path::PathBuf;
-use serde::Deserialize;
-use once_cell::sync::Lazy;
-use config::{Config, File, FileFormat};
 
 #[derive(Debug, Deserialize)]
 pub struct Configuration {
@@ -10,9 +10,9 @@ pub struct Configuration {
     pub address: String,
 
     pub gpg: String,
-    pub store_dir: String,
+    pub store_directory: String,
 
-    pub extensions_dir: String,
+    pub extensions_directory: String,
     pub gpg_opts: String,
     pub signing_keys: String,
 }
@@ -23,11 +23,11 @@ fn default_config() -> Configuration {
         address: "127.0.0.1".to_string(),
 
         gpg: "gpg".to_string(),
-        store_dir: "$HOME/passd".to_string(),
+        store_directory: "$HOME/passd".to_string(),
 
         gpg_opts: "".to_string(),
         signing_keys: "".to_string(),
-        extensions_dir: "$HOME/passd/.extensions".to_string(),
+        extensions_directory: "$HOME/passd/.extensions".to_string(),
     }
 }
 
@@ -47,7 +47,9 @@ fn load_config() -> Configuration {
     match builder.build() {
         Ok(configuration) => {
             println!("Successfully loaded configuration");
-            configuration.try_deserialize::<Configuration>().unwrap_or_else(|_| default_config())
+            configuration
+                .try_deserialize::<Configuration>()
+                .unwrap_or_else(|_| default_config())
         }
         Err(err) => {
             eprintln!("Failed to load configuration: {}", err);

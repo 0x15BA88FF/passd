@@ -1,12 +1,12 @@
-mod utils;
-mod server;
 mod commands;
+mod server;
+mod utils;
 
-use warp::Filter;
-use utils::config::CONFIG;
-use commands::{command_handler};
+use commands::command_handler;
+use server::request::CommandRequest;
 use std::net::{Ipv4Addr, SocketAddr};
-use server::{request::CommandRequest};
+use utils::config::CONFIG;
+use warp::Filter;
 
 pub fn parse_address(ip: &str) -> Ipv4Addr {
     ip.parse().unwrap_or_else(|_| Ipv4Addr::new(127, 0, 0, 1))

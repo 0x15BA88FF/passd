@@ -1,5 +1,5 @@
-use std::env;
 use regex::Regex;
+use std::env;
 use std::path::{Path, PathBuf};
 use walkdir::{DirEntry, WalkDir};
 
@@ -24,10 +24,14 @@ pub fn expand_path(path: &str) -> PathBuf {
 }
 
 pub fn walk<F>(root: &str, map_fn: Option<F>) -> Vec<PathBuf>
-    where F: Fn(&DirEntry) -> Option<PathBuf>, {
+where
+    F: Fn(&DirEntry) -> Option<PathBuf>,
+{
     WalkDir::new(root)
         .into_iter()
         .filter_map(Result::ok)
         .filter_map(|entry| map_fn.as_ref().and_then(|f| f(&entry)))
         .collect()
 }
+
+

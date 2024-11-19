@@ -1,5 +1,5 @@
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "PascalCase")]
@@ -7,6 +7,7 @@ pub enum ErrorType {
     NotFound,
     Unauthorized,
     InternalError,
+    InvalidRequest,
     ValidationError,
     Custom(String),
 }
